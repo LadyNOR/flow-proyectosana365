@@ -186,7 +186,6 @@ if (data?.ok === true) {
 } else {
   alert("NO OK, data=\n" + JSON.stringify(data));
 }
-};
 
   const closeDay = () => {
     if (window.confirm("¿Deseas cerrar el ciclo de hoy? Tu progreso se guardará en la bitácora.")) {
