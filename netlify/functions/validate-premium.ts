@@ -16,7 +16,10 @@ export default async (req: Request) => {
 
     // ✅ TEMPORAL (por ahora): lista blanca mínima
     // En el siguiente paso la conectamos con Hotmart para que sea automática.
-    const ALLOWED_CODES = (process.env.PREMIUM_CODES || "").split(",").map(s => s.trim()).filter(Boolean);
+    const ALLOWED_CODES = [
+  "NOR-TEST-2025"
+];
+
 
     const ok = ALLOWED_CODES.includes(code.trim());
 
