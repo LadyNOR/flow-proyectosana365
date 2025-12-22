@@ -1,0 +1,7 @@
+{
+  "name": "Quantum Flow Planner - PS365",
+  "description": "Una aplicación interactiva diseñada para sanar la procrastinación como síntoma de heridas de la infancia, utilizando neurociencia, PNL y reprogramación sónica.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
