@@ -157,38 +157,30 @@ const App: React.FC = () => {
 
   const handlePremiumUnlock = async () => {
   try {
-    const code = premiumInput.trim();
-    if (!code) {
-      alert("Ingresa tu código Premium.");
-      return;
-    }
-
-    // (opcional) si luego usarás email, lo dejamos listo:
-    // const email = premiumEmail.trim();
-
-    const res = await fetch("/.netlify/functions/validate-premium", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code }),
-    });
+    const res = await fetch(
+      "/.netlify/functions/validate-premium",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: premiumInput.trim(),
+        }),
+      }
+    );
 
     const data = await res.json();
 
-    if (!res.ok || !data?.valid) {
-      alert(data?.message || "Código inválido. Verifica e inténtalo de nuevo.");
-      return;
+    if (data.ok) {
+      alert("✨ Premium activado correctamente");
+      // aquí luego activaremos el estado premium real
+    } else {
+      alert("Código inválido. Verifica e inténtalo de nuevo.");
     }
-
-    // ✅ Desbloqueo Premium (persistente)
-    localStorage.setItem("ps365_premium", "true");
-    localStorage.setItem("ps365_premium_code", code);
-
-    alert("✅ Premium activado. ¡Bienvenida!");
-    setView("flow");
-  } catch (err) {
-    console.error(err);
-    alert("Error validando tu código. Inténtalo nuevamente.");
-  }
+  } catch (e) {
+    alert("Error de conexión con el servidor");
+   }
 };
 
   const closeDay = () => {
