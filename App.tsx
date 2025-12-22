@@ -170,25 +170,22 @@ const App: React.FC = () => {
       }
     );
 
-    const text = await res.text();
+   const text = await res.text();
 alert("RESPUESTA CRUDA:\n\n" + text);
 
 let data: any = {};
-try { data = JSON.parse(text); } catch {}
+try {
+  data = JSON.parse(text);
+} catch {
+  // si no es JSON válido, data queda {}
+}
 
 if (data?.ok === true) {
-  localStorage.setItem("ps365_premium", "1");
   alert("✨ Premium activado correctamente");
-  window.location.reload();
+  // aquí va lo que activa premium (localStorage, etc.)
 } else {
   alert("NO OK, data=\n" + JSON.stringify(data));
 }
-} else {
-  alert("NO OK, data=\n" + JSON.stringify(data));
-}
-  } catch (e) {
-    alert("Error de conexión con el servidor");
-   }
 };
 
   const closeDay = () => {
