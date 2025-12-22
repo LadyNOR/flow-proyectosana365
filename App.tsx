@@ -170,14 +170,17 @@ const App: React.FC = () => {
       }
     );
 
-    const data = await res.json();
+    const text = await res.text();
+alert("RESPUESTA CRUDA:\n\n" + text);
+let data: any = {};
+try { data = JSON.parse(text); } catch {}
+
 
     if (data.ok) {
-      alert("✨ Premium activado correctamente");
-      // aquí luego activaremos el estado premium real
-    } else {
-      alert("Código inválido. Verifica e inténtalo de nuevo.");
-    }
+  alert("✨ Premium activado correctamente");
+} else {
+  alert("NO OK. data=\n" + JSON.stringify(data));
+}
   } catch (e) {
     alert("Error de conexión con el servidor");
    }
