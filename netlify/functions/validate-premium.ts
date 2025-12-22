@@ -1,36 +1,33 @@
-export default async (req: Request) => {
+export const handler = async (event: any) => {
   try {
-    if (req.method !== "POST") {
-      return new Response("Method not allowed", { status: 405 });
+    if (event.httpMethod !== "POST") {
+      return { statusCode: 405, body: "Method not allowed" };
     }
 
-    const body = await req.json();
-    const { code } = body || {};
+    const body = JSON.parse(event.body || "{}");
+    const code = body?.code;
 
     if (!code || typeof code !== "string") {
-      return new Response(JSON.stringify({ ok: false, error: "CODE_REQUIRED" }), {
-        status: 400,
+      return {
+        statusCode: 400,
         headers: { "Content-Type": "application/json" },
-      });
+        body: JSON.stringify({ ok: false, error: "CODE_REQUIRED" }),
+      };
     }
 
-    // ✅ TEMPORAL (por ahora): lista blanca mínima
-    // En el siguiente paso la conectamos con Hotmart para que sea automática.
-    const ALLOWED_CODES = [
-  "NOR-TEST-2025"
-];
-
-
+    const ALLOWED_CODES = ["NOR-TEST-2025"];
     const ok = ALLOWED_CODES.includes(code.trim());
 
-    return new Response(JSON.stringify({ ok }), {
-      status: 200,
+    return {
+      statusCode: 200,
       headers: { "Content-Type": "application/json" },
-    });
+      body: JSON.stringify({ ok }),
+    };
   } catch (e) {
-    return new Response(JSON.stringify({ ok: false, error: "SERVER_ERROR" }), {
-      status: 500,
+    return {
+      statusCode: 500,
       headers: { "Content-Type": "application/json" },
-    });
+      body: JSON.stringify({ ok: false, error: "SERVER_ERROR" }),
+    };
   }
 };
