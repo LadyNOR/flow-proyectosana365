@@ -651,8 +651,6 @@ if (data?.ok === true) {
       )}
     </div>
   );
-};
-
 const BitacoraIcon = ({ size, className }: { size: number, className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
