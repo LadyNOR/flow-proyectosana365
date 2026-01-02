@@ -163,16 +163,8 @@ const App: React.FC = () => {
       body: JSON.stringify({ code: premiumInput.trim() }),
     });
 
-    const text = await res.text();
-    alert("RESPUESTA CRUDA:\n\n" + text);
-
-    let data: any = {};
-    try {
-      data = JSON.parse(text);
-    } catch {
-      // si no es JSON válido, data queda {}
-    }
-
+    const data = await res.json();
+  
     if (data?.ok === true) {
   setIsPremium(true);
   setView('flow');
