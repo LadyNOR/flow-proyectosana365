@@ -75,6 +75,30 @@ const App: React.FC = () => {
   useEffect(() => { setStorage('mission', missionAlpha); }, [missionAlpha]);
   useEffect(() => { setStorage('blocks', blocks); }, [blocks]);
   useEffect(() => { setStorage('history', history); }, [history]);
+useEffect(() => {
+  const token = localStorage.getItem("ps365_premiumToken");
+  if (!token) return;
+
+  (async () => {
+    try {
+      const res = await fetch("/.netlify/functions/validate-premium", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+
+      const data = await res.json();
+      if (data?.ok === true) setIsPremium(true);
+      else {
+        setIsPremium(false);
+        localStorage.removeItem("ps365_premiumToken");
+      }
+    } catch {
+      // si falla la conexión, NO cambiamos estado
+      // (evita desactivar premium solo por un error temporal)
+    }
+  })();
+}, []);
 
   useEffect(() => {
     audioRef.current = new Audio();
