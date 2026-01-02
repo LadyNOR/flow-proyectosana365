@@ -157,35 +157,35 @@ const App: React.FC = () => {
 
   const handlePremiumUnlock = async () => {
   try {
-    const res = await fetch(
-      "/.netlify/functions/validate-premium",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code: premiumInput.trim(),
-        }),
-      }
-    );
+    const res = await fetch("/.netlify/functions/validate-premium", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: premiumInput.trim() }),
+    });
 
-   const text = await res.text();
-alert("RESPUESTA CRUDA:\n\n" + text);
+    const text = await res.text();
+    alert("RESPUESTA CRUDA:\n\n" + text);
 
-let data: any = {};
-try {
-  data = JSON.parse(text);
-} catch {
-  // si no es JSON válido, data queda {}
-}
+    let data: any = {};
+    try {
+      data = JSON.parse(text);
+    } catch {
+      // si no es JSON válido, data queda {}
+    }
 
-if (data?.ok === true) {
+    if (data?.ok === true) {
+  setIsPremium(true);
+  setView('flow');
+  setPremiumInput('');
   alert("✨ Premium activado correctamente");
-  // aquí va lo que activa premium (localStorage, etc.)
 } else {
-  alert("NO OK, data=\n" + JSON.stringify(data));
+  alert("Código inválido. Revisa e inténtalo nuevamente.");
 }
+
+  } catch (e) {
+    alert("Error de conexión con el servidor");
+  }
+};
 
   const closeDay = () => {
     if (window.confirm("¿Deseas cerrar el ciclo de hoy? Tu progreso se guardará en la bitácora.")) {
@@ -651,6 +651,8 @@ if (data?.ok === true) {
       )}
     </div>
   );
+};
+  
 const BitacoraIcon = ({ size, className }: { size: number, className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
