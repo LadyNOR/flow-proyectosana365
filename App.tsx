@@ -191,7 +191,7 @@ useEffect(() => {
 	if (data? .ok === true) {
 		// guardar token si viene
 		  
-    if (data?.token) localStorage.setItem("ps365_premiumToken", data.token);
+    if (data?.token){localStorage.setItem("ps365_premiumToken", data.token);}
 
   setIsPremium(true);
   setView('flow');
