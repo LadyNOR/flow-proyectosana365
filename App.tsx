@@ -188,7 +188,7 @@ useEffect(() => {
     });
 
     const data = await res.json();
-	if (data? .ok === true) {
+	if (data?.ok === true) {
 		// guardar token si viene
 		  
     if (data?.token){localStorage.setItem("ps365_premiumToken", data.token);}
