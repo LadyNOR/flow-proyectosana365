@@ -189,7 +189,8 @@ useEffect(() => {
 
     const data = await res.json();
   
-    if (data?.ok === true) {
+    if (data?.token) localStorage.setItem("ps365_premiumToken", data.token);
+
   setIsPremium(true);
   setView('flow');
   setPremiumInput('');
