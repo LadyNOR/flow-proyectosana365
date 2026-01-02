@@ -40,8 +40,11 @@ const Card: React.FC<{ children: React.ReactNode; className?: string; id?: strin
 const App: React.FC = () => {
   const [view, setView] = useState<'flow' | 'week' | 'awards' | 'premium'>('flow');
   const [auth, setAuth] = useState(getStorage('auth', false));
-  const [isPremium, setIsPremium] = useState(getStorage('isPremium', false));
+  const [isPremium, setIsPremium] = useState(false);
   const [showPremium, setShowPremium] = useState(false);
+  useEffect(() => {
+  localStorage.removeItem("ps365_isPremium");
+}, []);
   const [passInput, setPassInput] = useState("");
   const [premiumInput, setPremiumInput] = useState("");
   const [username, setUsername] = useState(getStorage('username', ''));
@@ -69,7 +72,6 @@ const App: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => { setStorage('auth', auth); }, [auth]);
-  useEffect(() => { setStorage('isPremium', isPremium); }, [isPremium]);
   useEffect(() => { setStorage('username', username); }, [username]);
   useEffect(() => { setStorage('energy', energy); }, [energy]);
   useEffect(() => { setStorage('mission', missionAlpha); }, [missionAlpha]);
